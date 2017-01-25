@@ -9,7 +9,7 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js && npm run previewBuild",
     "lint": "eslint --ext .js,.vue src",
-    "previewBuild": "open 'http://localhost:8000' && pushd ./dist; python -m SimpleHTTPServer; popd"
+    "previewBuild": "open 'http://localhost:8000' & pushd ./dist; python -m SimpleHTTPServer; popd"
   },
   "dependencies": {
     "firebase": "^3.6.6",
