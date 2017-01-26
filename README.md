@@ -1,7 +1,7 @@
 # steepd
 
 > Internal tea steeping app
-
+todo - implement vuex and vue-router
 ## Build Setup
 
 ``` bash
