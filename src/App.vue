@@ -62,7 +62,6 @@
 <script>
 
 import firebase from 'firebase'
-import orderBy from 'lodash.orderby'
 
 let config = {
   apiKey: "AIzaSyDsaWFL55FnNnq9J18LtIxRG-bRuBU47Es",
@@ -130,7 +129,9 @@ const initApp = function() {
 }
 
 computed.teasFiltered = function() {
-  return orderBy(this.teas, ['name'], ['asc']);
+  return this.teas.sort(function (a, b) {
+    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+  });
 }
 
 export default {
