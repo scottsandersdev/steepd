@@ -47,7 +47,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="tea in teas">
+            <tr v-for="tea in teasFiltered">
               <td>{{tea.name}}</td>
               <td>{{tea.type}}</td>
               <td><span class="btn-trash glyphicon glyphicon-trash" @click.prevent="removeTea(tea)"></span></td>
@@ -60,8 +60,9 @@
 </template>
 
 <script>
-import Hello from './components/Hello'
+
 import firebase from 'firebase'
+import orderBy from 'lodash.orderby'
 
 let config = {
   apiKey: "AIzaSyDsaWFL55FnNnq9J18LtIxRG-bRuBU47Es",
@@ -76,6 +77,7 @@ let db = app.database();
 
 let teasRef = db.ref('teas');
 let methods = {};
+let computed = {};
 
 methods.addTea = function() {
   teasRef.push(this.newTea);
@@ -96,7 +98,7 @@ methods.signIn = function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
   } else {
-    firebase.auth().signOut();
+    this.signOut();
   }
 }
 
@@ -106,7 +108,7 @@ methods.signOut = function() {
 
 
 /**
- * Checks if user signed in
+ * Checks if user signed in on load
  * @returns {void}
  */
 const initApp = function() {
@@ -127,6 +129,9 @@ const initApp = function() {
   });
 }
 
+computed.teasFiltered = function() {
+  return orderBy(this.teas, ['name'], ['asc']);
+}
 
 export default {
   name: 'app',
@@ -144,6 +149,7 @@ export default {
       }
     }
   },
+  computed: computed,
   methods: methods,
   mounted: initApp
 }
